@@ -9,8 +9,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="11.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
 		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
-  </ItemGroup>
+	  <ProjectReference Include="..\..\Core\Chat.Application\Chat.Application.csproj" />
+	</ItemGroup>
 
 </Project>

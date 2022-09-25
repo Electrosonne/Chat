@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
+	  <ProjectReference Include="..\..\Core\Chat.Domain\Chat.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
