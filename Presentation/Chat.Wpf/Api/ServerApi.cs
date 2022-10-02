@@ -25,7 +25,7 @@ namespace Chat.Wpf
         /// </summary>
         /// https://localhost:44321
         /// http://localhost:5000
-        private const string Url = "http://localhost:5000";
+        private const string Url = "https://localhost:44321";
 
         /// <summary>
         /// HttpClient.

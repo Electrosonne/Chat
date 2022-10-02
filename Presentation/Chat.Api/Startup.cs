@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Server.Hubs;
+using System.Reflection;
 
 namespace Server
 {
@@ -40,9 +41,15 @@ namespace Server
         /// <param name="services">Services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(config =>
+            {
+                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+            });
+
+            services.AddApplication();
+            services.AddDatabase();
             services.AddSignalR();
             services.AddControllersWithViews();
-            services.AddSingleton<IChatDbContext, ChatDbContext>();
         }
 
         /// <summary>

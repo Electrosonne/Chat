@@ -4,11 +4,11 @@
 // </copyright>
 // ------------------------------------------------------------
 
-using Chat.Application;
+using Chat.Application.Commands;
 using Chat.Domain;
+using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Server.Hubs
@@ -21,15 +21,15 @@ namespace Server.Hubs
         /// <summary>
         /// Chat database context.
         /// </summary>
-        private readonly IChatDbContext context;
+        private readonly IMediator mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageHub"/> class.
         /// </summary>
-        /// <param name="context">Chat database context.</param>
-        public MessageHub(IChatDbContext context)
+        /// <param name="mediator">Mediator.</param>
+        public MessageHub(IMediator mediator)
         {
-            this.context = context;
+            this.mediator = mediator;
         }
 
         /// <summary>
@@ -37,13 +37,11 @@ namespace Server.Hubs
         /// </summary>
         /// <param name="message">Message.</param>
         /// <returns>Task.</returns>
-        public Task GetMessage(Message message)
+        public async Task GetMessage(Message message)
         {
-            var user = this.context.Users.Where(u => u.Nickname.Equals(message.User.Nickname)).FirstOrDefault();
-            message.User = user;
-            this.context.Messages.Add(message);
-            this.context.SaveChangesAsync();
-            return this.Clients.Others.SendAsync("Send", message);
+            AddMessageCommand command = new AddMessageCommand() { Message = message };
+            await this.mediator.Send(command);
+            await this.Clients.Others.SendAsync("Send", message);
         }
     }
 }

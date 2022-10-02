@@ -33,7 +33,7 @@ namespace Chat.Database
         /// <inheritdoc/>
         public async Task SaveChangesAsync()
         {
-            await this.SaveChangesAsync();
+            await base.SaveChangesAsync();
         }
 
         /// <summary>

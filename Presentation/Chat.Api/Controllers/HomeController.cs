@@ -4,14 +4,14 @@
 // </copyright>
 // ------------------------------------------------------------
 
-using Chat.Application;
+using AutoMapper;
+using Chat.Application.Commands;
+using Chat.Application.Queries;
 using Chat.Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Server.Controllers
@@ -27,19 +27,26 @@ namespace Server.Controllers
         private readonly ILogger<HomeController> logger;
 
         /// <summary>
-        /// Chat database context.
+        /// Mapper.
         /// </summary>
-        private readonly IChatDbContext context;
+        private readonly IMapper mapper;
+
+        /// <summary>
+        /// Mediator.
+        /// </summary>
+        private IMediator mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="logger">Logger.</param>
-        /// <param name="context">Chat database context.</param>
-        public HomeController(ILogger<HomeController> logger, IChatDbContext context)
+        /// <param name="mediator">Mediator.</param>
+        /// <param name="mapper">Mapper.</param>
+        public HomeController(ILogger<HomeController> logger, IMediator mediator, IMapper mapper)
         {
             this.logger = logger;
-            this.context = context;
+            this.mediator = mediator;
+            this.mapper = mapper;
         }
 
         /// <summary>
@@ -48,9 +55,10 @@ namespace Server.Controllers
         /// <param name="date">DateTime.</param>
         /// <returns>IActionResult.</returns>
         [HttpGet("GetMessages")]
-        public IActionResult GetMessages([FromBody] DateTime date)
+        public async Task<IActionResult> GetMessages([FromBody] DateTime date)
         {
-            return this.Ok(this.context.Messages.Where(m => m.Date < date).Include(u => u.User).AsEnumerable().TakeLast(10).ToList());
+            GetMessagesQuery command = new GetMessagesQuery() { DateTime = date };
+            return this.Ok(await this.mediator.Send(command));
         }
 
         /// <summary>
@@ -61,21 +69,8 @@ namespace Server.Controllers
         [HttpPost("Authorization")]
         public async Task<IActionResult> Authorization([FromBody] User user)
         {
-            var data = await this.context.Users.Where(u => u.Nickname.Equals(user.Nickname)).FirstOrDefaultAsync();
-
-            if (data == null)
-            {
-                return this.BadRequest($"No finded user \"{user.Nickname}\".");
-            }
-
-            if (data.Password.Equals(user.Password))
-            {
-                return this.Ok();
-            }
-            else
-            {
-                return this.BadRequest($"Invalid password.");
-            }
+            AuthorizationUserQuery command = new AuthorizationUserQuery() { User = user };
+            return this.Ok(await this.mediator.Send(command));
         }
 
         /// <summary>
@@ -86,17 +81,8 @@ namespace Server.Controllers
         [HttpPost("Registration")]
         public async Task<IActionResult> Registration([FromBody] User user)
         {
-            var data = await this.context.Users.Where(u => u.Nickname.Equals(user.Nickname)).FirstOrDefaultAsync();
-
-            if (data != null)
-            {
-                return this.BadRequest($"User \"{user.Nickname}\" already exist.");
-            }
-
-            await this.context.Users.AddAsync(user);
-            await this.context.SaveChangesAsync();
-
-            return this.Ok();
+            RegistrationUserCommand command = new RegistrationUserCommand() { User = user };
+            return this.Ok(await this.mediator.Send(command));
         }
 
         /// <summary>
