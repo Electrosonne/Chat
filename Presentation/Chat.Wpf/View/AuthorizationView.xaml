@@ -17,6 +17,9 @@
                 <Button Content="Enter" Command="{Binding AuthorizationCommand}"/>
                 <Button Content="Registration" Command="{Binding RegistrationCommand}"/>
             </StackPanel>
+            <StackPanel.InputBindings>
+                <KeyBinding Command="{Binding AuthorizationCommand}" Key="Return"/>
+            </StackPanel.InputBindings>
         </StackPanel>
     </Grid>
 </UserControl>

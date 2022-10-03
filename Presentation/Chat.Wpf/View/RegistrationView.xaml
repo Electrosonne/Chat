@@ -16,6 +16,9 @@
             <local:BindablePasswordBox Password="{Binding RepeatPassword, Mode=TwoWay}"/>
             <Label Content="{Binding Warning}" Foreground="Red"/>
             <Button Content="Enter" Command="{Binding RegistrationCommand}"/>
+            <StackPanel.InputBindings>
+                <KeyBinding Command="{Binding RegistrationCommand}" Key="Return"/>
+            </StackPanel.InputBindings>
         </StackPanel>
     </Grid>
 </UserControl>
