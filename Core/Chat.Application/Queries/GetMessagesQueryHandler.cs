@@ -5,6 +5,7 @@
 // ------------------------------------------------------------
 
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
@@ -49,14 +50,10 @@ namespace Chat.Application.Queries
         /// <returns>Id.</returns>
         public async Task<IList> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
         {
-            List<MessageVm> list = new List<MessageVm>();
+            var list = await this.context.Messages.Where(m => m.Date < request.DateTime).Include(u => u.User)
+                .ProjectTo<MessageVm>(this.mapper.ConfigurationProvider).ToListAsync();
 
-            foreach (var message in this.context.Messages.Where(m => m.Date < request.DateTime).Include(u => u.User).AsEnumerable().TakeLast(10).ToList())
-            {
-                list.Add(this.mapper.Map<MessageVm>(message));
-            }
-
-            return list;
+            return list.TakeLast(10).ToList();
         }
     }
 }
