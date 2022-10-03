@@ -39,9 +39,13 @@ namespace Chat.Application.Commands
         /// <returns>Id.</returns>
         public async Task<bool> Handle(AddMessageCommand request, CancellationToken cancellationToken)
         {
-            Message message = request.Message;
+            Message message = new Message()
+            {
+                Date = request.Message.Date,
+                Text = request.Message.Text,
+            };
 
-            var user = this.context.Users.Where(u => u.Nickname.Equals(message.User.Nickname)).FirstOrDefault();
+            var user = this.context.Users.Where(u => u.Nickname.Equals(request.Message.User.Nickname)).FirstOrDefault();
             message.User = user;
             this.context.Messages.Add(message);
             await this.context.SaveChangesAsync();

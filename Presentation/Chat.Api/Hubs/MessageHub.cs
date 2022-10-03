@@ -4,6 +4,7 @@
 // </copyright>
 // ------------------------------------------------------------
 
+using Chat.Application;
 using Chat.Application.Commands;
 using Chat.Domain;
 using MediatR;
@@ -37,7 +38,7 @@ namespace Server.Hubs
         /// </summary>
         /// <param name="message">Message.</param>
         /// <returns>Task.</returns>
-        public async Task GetMessage(Message message)
+        public async Task GetMessage(MessageVm message)
         {
             AddMessageCommand command = new AddMessageCommand() { Message = message };
             await this.mediator.Send(command);

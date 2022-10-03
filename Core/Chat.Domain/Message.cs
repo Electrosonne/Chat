@@ -23,19 +23,6 @@ namespace Chat.Domain
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Message"/> class.
-        /// </summary>
-        /// <param name="user">User.</param>
-        /// <param name="text">Text.</param>
-        /// <param name="date">Date.</param>
-        public Message(User user, string text, DateTime date)
-        {
-            this.User = user;
-            this.Text = text;
-            this.Date = date;
-        }
-
-        /// <summary>
         /// Gets or sets id.
         /// </summary>
         [Key]

@@ -4,6 +4,7 @@
 // </copyright>
 // ------------------------------------------------------------
 
+using Chat.Application;
 using Chat.Domain;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
@@ -57,8 +58,8 @@ namespace Chat.Wpf
         /// <summary>
         /// Delegate of message.
         /// </summary>
-        /// <param name="message">Message.</param>
-        public delegate void MessageDelegate(Message message);
+        /// <param name="message">MessageVm.</param>
+        public delegate void MessageDelegate(MessageVm message);
 
         /// <summary>
         /// Message received event.
@@ -71,7 +72,7 @@ namespace Chat.Wpf
         public void StartHub()
         {
             this.hubConnection = new HubConnectionBuilder().WithUrl(Url + "/Chat").Build();
-            this.hubConnection.On<Message>("Send", message =>
+            this.hubConnection.On<MessageVm>("Send", message =>
             {
                 this.MessageReceived.Invoke(message);
             });
@@ -101,15 +102,15 @@ namespace Chat.Wpf
         /// Get 10 messages before date asynchronously.
         /// </summary>
         /// <param name="date">DateTime.</param>
-        /// <returns>Task(IList(Message)).</returns>
-        public async Task<IList<Message>> GetMessages(DateTime date)
+        /// <returns>Task(IList(MessageVm)).</returns>
+        public async Task<IList<MessageVm>> GetMessages(DateTime date)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Url + "/GetMessages");
             request.Content = JsonContent.Create(date);
             var response = await this.httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             var responseStream = await response.Content.ReadAsStreamAsync();
-            var result = await JsonSerializer.DeserializeAsync<IList<Message>>(responseStream, this.jsonSerializerOptions);
+            var result = await JsonSerializer.DeserializeAsync<IList<MessageVm>>(responseStream, this.jsonSerializerOptions);
             return result;
         }
 
@@ -158,9 +159,9 @@ namespace Chat.Wpf
         /// <summary>
         /// Send message to hub.
         /// </summary>
-        /// <param name="message">Message.</param>
+        /// <param name="message">MessageVm.</param>
         /// <returns>Task.</returns>
-        public async Task SendMessage(Message message)
+        public async Task SendMessage(MessageVm message)
         {
             this.HubCheck();
 

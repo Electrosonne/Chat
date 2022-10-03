@@ -4,6 +4,7 @@
 // </copyright>
 // ------------------------------------------------------------
 
+using Chat.Application;
 using Chat.Domain;
 using System;
 using System.Collections.ObjectModel;
@@ -43,7 +44,7 @@ namespace Chat.Wpf
             this.Title = "Chat";
             this.Message = string.Empty;
             this.User = user;
-            this.Messages = new ObservableCollection<Message>();
+            this.Messages = new ObservableCollection<MessageVm>();
 
             this.Api.StartHub();
             this.Api.MessageReceived += this.MessageReceived;
@@ -76,7 +77,7 @@ namespace Chat.Wpf
         /// <summary>
         /// Gets or sets messages in chat.
         /// </summary>
-        public ObservableCollection<Message> Messages { get; set; }
+        public ObservableCollection<MessageVm> Messages { get; set; }
 
         /// <summary>
         /// Gets send message command.
@@ -98,7 +99,7 @@ namespace Chat.Wpf
         /// Handler of message received event.
         /// </summary>
         /// <param name="message">Recieved message.</param>
-        private void MessageReceived(Message message)
+        private void MessageReceived(MessageVm message)
         {
             App.Current.Dispatcher.Invoke(() =>
             {
@@ -111,7 +112,7 @@ namespace Chat.Wpf
         /// </summary>
         private async void SendMessageCommandExecution()
         {
-            var message = new Message(this.User, this.Message, DateTime.Now);
+            var message = new MessageVm(new UserVm { Nickname = this.User.Nickname }, this.Message, DateTime.Now);
             this.Messages.Add(message);
             this.Message = string.Empty;
             await this.Api.SendMessage(message);

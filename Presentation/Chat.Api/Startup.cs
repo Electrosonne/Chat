@@ -44,6 +44,7 @@ namespace Server
             services.AddAutoMapper(config =>
             {
                 config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                config.AddProfile(new AssemblyMappingProfile(typeof(IChatDbContext).Assembly));
             });
 
             services.AddApplication();

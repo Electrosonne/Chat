@@ -17,6 +17,6 @@ namespace Chat.Application.Commands
         /// <summary>
         /// Gets or sets message.
         /// </summary>
-        public Message Message { get; set; }
+        public MessageVm Message { get; set; }
     }
 }
