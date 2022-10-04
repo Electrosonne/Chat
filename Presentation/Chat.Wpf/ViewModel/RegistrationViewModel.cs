@@ -4,7 +4,7 @@
 // </copyright>
 // ------------------------------------------------------------
 
-using Chat.Domain;
+using Chat.Application;
 using System;
 using System.Windows.Input;
 
@@ -93,14 +93,7 @@ namespace Chat.Wpf
                     return;
                 }
 
-                var user = new User() { Nickname = this.Nickname, Password = this.Password };
-                var error = user.ValidationError();
-
-                if (!error.Equals(string.Empty))
-                {
-                    this.Warning = error;
-                    return;
-                }
+                var user = new UserVm() { Nickname = this.Nickname, Password = this.Password };
 
                 if (await this.Api.Registration(user))
                 {

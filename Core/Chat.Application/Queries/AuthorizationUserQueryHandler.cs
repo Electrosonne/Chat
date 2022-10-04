@@ -41,7 +41,7 @@ namespace Chat.Application.Queries
         /// <returns>Id.</returns>
         public async Task<bool> Handle(AuthorizationUserQuery request, CancellationToken cancellationToken)
         {
-            User user = request.User;
+            UserVm user = request.UserVm;
 
             var data = await this.context.Users.Where(u => u.Nickname.Equals(user.Nickname)).FirstOrDefaultAsync();
 

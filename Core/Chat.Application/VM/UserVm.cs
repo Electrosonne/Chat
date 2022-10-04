@@ -20,6 +20,11 @@ namespace Chat.Application
         public string Nickname { get; set; }
 
         /// <summary>
+        /// Gets or sets password of user.
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
         /// Mapping.
         /// </summary>
         /// <param name="profile">Profile.</param>

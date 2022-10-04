@@ -41,14 +41,18 @@ namespace Chat.Application.Commands
         /// <returns>Id.</returns>
         public async Task<int> Handle(RegistrationUserCommand request, CancellationToken cancellationToken)
         {
-            User user = request.User;
-
-            var data = await this.context.Users.Where(u => u.Nickname.Equals(user.Nickname)).FirstOrDefaultAsync();
+            var data = await this.context.Users.Where(u => u.Nickname.Equals(request.UserVm.Nickname)).FirstOrDefaultAsync();
 
             if (data != null)
             {
-                throw new Exception($"User \"{user.Nickname}\" already exist.");
+                throw new Exception($"User \"{request.UserVm.Nickname}\" already exist.");
             }
+
+            User user = new User
+            {
+                Nickname = request.UserVm.Nickname,
+                Password = request.UserVm.Password,
+            };
 
             await this.context.Users.AddAsync(user);
             await this.context.SaveChangesAsync();

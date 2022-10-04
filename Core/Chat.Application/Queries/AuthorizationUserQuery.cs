@@ -15,8 +15,8 @@ namespace Chat.Application.Queries
     public class AuthorizationUserQuery : IRequest<bool>
     {
         /// <summary>
-        /// Gets or sets user.
+        /// Gets or sets userVm.
         /// </summary>
-        public User User { get; set; }
+        public UserVm UserVm { get; set; }
     }
 }

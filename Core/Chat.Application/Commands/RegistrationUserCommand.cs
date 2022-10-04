@@ -15,8 +15,8 @@ namespace Chat.Application.Commands
     public class RegistrationUserCommand : IRequest<int>
     {
         /// <summary>
-        /// Gets or sets user.
+        /// Gets or sets userVm.
         /// </summary>
-        public User User { get; set; }
+        public UserVm UserVm { get; set; }
     }
 }

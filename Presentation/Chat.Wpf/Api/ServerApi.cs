@@ -5,7 +5,6 @@
 // ------------------------------------------------------------
 
 using Chat.Application;
-using Chat.Domain;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
@@ -117,9 +116,9 @@ namespace Chat.Wpf
         /// <summary>
         /// Authorization asynchronously.
         /// </summary>
-        /// <param name="user">User.</param>
+        /// <param name="user">UserVm.</param>
         /// <returns>Task(bool).</returns>
-        public async Task<bool> Authorization(User user)
+        public async Task<bool> Authorization(UserVm user)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, Url + "/Authorization");
             request.Content = JsonContent.Create(user);
@@ -138,9 +137,9 @@ namespace Chat.Wpf
         /// <summary>
         /// Registration asynchronously.
         /// </summary>
-        /// <param name="user">User.</param>
+        /// <param name="user">UserVm.</param>
         /// <returns>Task(bool).</returns>
-        public async Task<bool> Registration(User user)
+        public async Task<bool> Registration(UserVm user)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, Url + "/Registration");
             request.Content = JsonContent.Create(user);

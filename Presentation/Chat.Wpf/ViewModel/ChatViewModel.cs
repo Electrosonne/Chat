@@ -5,7 +5,6 @@
 // ------------------------------------------------------------
 
 using Chat.Application;
-using Chat.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace Chat.Wpf
         /// </summary>
         /// <param name="main">MainViewModel.</param>
         /// <param name="user">User.</param>
-        public ChatViewModel(MainViewModel main, User user)
+        public ChatViewModel(MainViewModel main, UserVm user)
             : base(main)
         {
             this.Title = "Chat";
@@ -72,7 +71,7 @@ namespace Chat.Wpf
         /// <summary>
         /// Gets or sets user.
         /// </summary>
-        public User User { get; set; }
+        public UserVm User { get; set; }
 
         /// <summary>
         /// Gets or sets messages in chat.

@@ -6,7 +6,6 @@
 
 using Chat.Application;
 using Chat.Application.Commands;
-using Chat.Domain;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System;

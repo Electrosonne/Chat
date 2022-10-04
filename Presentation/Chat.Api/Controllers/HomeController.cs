@@ -5,9 +5,9 @@
 // ------------------------------------------------------------
 
 using AutoMapper;
+using Chat.Application;
 using Chat.Application.Commands;
 using Chat.Application.Queries;
-using Chat.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -67,9 +67,9 @@ namespace Server.Controllers
         /// <param name="user">User.</param>
         /// <returns>IActionResult.</returns>
         [HttpPost("Authorization")]
-        public async Task<IActionResult> Authorization([FromBody] User user)
+        public async Task<IActionResult> Authorization([FromBody] UserVm user)
         {
-            AuthorizationUserQuery command = new AuthorizationUserQuery() { User = user };
+            AuthorizationUserQuery command = new AuthorizationUserQuery() { UserVm = user };
             return this.Ok(await this.mediator.Send(command));
         }
 
@@ -79,9 +79,9 @@ namespace Server.Controllers
         /// <param name="user">User.</param>
         /// <returns>IActionResult.</returns>
         [HttpPost("Registration")]
-        public async Task<IActionResult> Registration([FromBody] User user)
+        public async Task<IActionResult> Registration([FromBody] UserVm user)
         {
-            RegistrationUserCommand command = new RegistrationUserCommand() { User = user };
+            RegistrationUserCommand command = new RegistrationUserCommand() { UserVm = user };
             return this.Ok(await this.mediator.Send(command));
         }
 
