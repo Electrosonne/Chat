@@ -1,25 +1,23 @@
 ﻿// ------------------------------------------------------------
-// <copyright file="UserVmValidator.cs" company="ElectroSonne">
+// <copyright file="RegistrationUserCommandValidator.cs" company="ElectroSonne">
 // Copyright (c) ElectroSonne, Russia, 2022.
 // </copyright>
 // ------------------------------------------------------------
 
-using Chat.Application.Commands;
-using Chat.Application.Queries;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Chat.Application.Vm
+namespace Chat.Application.Commands
 {
     /// <summary>
     /// UserVm Validator.
     /// </summary>
-    public class UserVmValidator : AbstractValidator<RegistrationUserCommand>
+    public class RegistrationUserCommandValidator : AbstractValidator<RegistrationUserCommand>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserVmValidator"/> class.
+        /// Initializes a new instance of the <see cref="RegistrationUserCommandValidator"/> class.
         /// </summary>
-        public UserVmValidator()
+        public RegistrationUserCommandValidator()
         {
             this.RuleFor(userVm => userVm.UserVm.Nickname).MinimumLength(3).WithMessage($"Nickname must be longer.");
             this.RuleFor(userVm => userVm.UserVm.Nickname).MaximumLength(20).WithMessage($"Nickname must be less.");

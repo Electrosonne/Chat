@@ -4,7 +4,6 @@
 // </copyright>
 // ------------------------------------------------------------
 
-using Chat.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

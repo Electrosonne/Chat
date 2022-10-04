@@ -1,22 +1,21 @@
 ﻿// ------------------------------------------------------------
-// <copyright file="AuthorizationUserQuery.cs" company="ElectroSonne">
+// <copyright file="AddMessageCommand.cs" company="ElectroSonne">
 // Copyright (c) ElectroSonne, Russia, 2022.
 // </copyright>
 // ------------------------------------------------------------
 
-using Chat.Domain;
 using MediatR;
 
-namespace Chat.Application.Queries
+namespace Chat.Application.Commands
 {
     /// <summary>
-    /// AuthorizationUserQuery.
+    /// AddMessageCommand.
     /// </summary>
-    public class AuthorizationUserQuery : IRequest<bool>
+    public class AddMessageCommand : IRequest<bool>
     {
         /// <summary>
-        /// Gets or sets userVm.
+        /// Gets or sets message.
         /// </summary>
-        public UserVm UserVm { get; set; }
+        public MessageVm Message { get; set; }
     }
 }
